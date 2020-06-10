@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-
+const imageMin=require('gulp-imagemin');
 
 // Log message
 gulp.task('message', async () => {
@@ -10,4 +10,11 @@ gulp.task('message', async () => {
 gulp.task('copyHtml', async () => {
     gulp.src('src/*.html')
         .pipe(gulp.dest('dist'))
+});
+
+// image optimiazation 
+gulp.task('imageMin', async () => {
+    gulp.src('src/images/*')
+        .pipe(imageMin())
+        .pipe(gulp.dest('dist/assets'))
 });
