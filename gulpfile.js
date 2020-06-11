@@ -34,5 +34,6 @@ gulp.task('minifyJS',async ()=>{
 gulp.task('concat',async ()=>{
     gulp.src(['src/js/add.js','src/js/subtraction.js'])
         .pipe(concat('arithmaticOperation.js').on('error',console.error))
+        .pipe(uglify().on('error', console.error))
         .pipe(gulp.dest('dist/js/'))
 })
