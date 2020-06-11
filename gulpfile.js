@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const imageMin=require('gulp-imagemin');
+const uglify=require('gulp-uglify-es').default;
 
 // Log message
 gulp.task('message', async () => {
@@ -12,9 +13,17 @@ gulp.task('copyHtml', async () => {
         .pipe(gulp.dest('dist'))
 });
 
-// image optimiazation 
+// image optimization 
 gulp.task('imageMin', async () => {
     gulp.src('src/images/*')
         .pipe(imageMin())
         .pipe(gulp.dest('dist/assets'))
 });
+
+
+// Minify JS
+gulp.task('minifyJS',async ()=>{
+    gulp.src('src/js/asyncSeries.js')
+        .pipe(uglify().on('error', console.error))
+        .pipe(gulp.dest('dist/js'))
+})
