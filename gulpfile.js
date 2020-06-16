@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const imageMin=require('gulp-imagemin');
 const uglify=require('gulp-uglify-es').default;
 const concat=require('gulp-concat');
+const sass=require('gulp-sass');
 
 // Log message
 gulp.task('message', async () => {
@@ -33,7 +34,16 @@ gulp.task('minifyJS',async ()=>{
 
 gulp.task('concat',async ()=>{
     gulp.src(['src/js/add.js','src/js/subtraction.js'])
-        .pipe(concat('arithmaticOperation.js').on('error',console.error))
+        .pipe(concat('arithmaticOperations.js').on('error',console.error))
         .pipe(uglify().on('error', console.error))
         .pipe(gulp.dest('dist/js/'))
 })
+
+// Sass 
+
+gulp.task('sass',async()=>{
+    gulp.src('src/scss/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('dist/css'))
+})
+
