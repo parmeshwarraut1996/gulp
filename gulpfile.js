@@ -3,7 +3,7 @@ const imageMin=require('gulp-imagemin');
 const uglify=require('gulp-uglify-es').default;
 const concat=require('gulp-concat');
 const sass=require('gulp-sass');
-
+const browserSync=require('browser-sync').create();
 // Log message
 gulp.task('message', async () => {
     console.log("Gulp is running....");
@@ -40,10 +40,24 @@ gulp.task('concat',async ()=>{
 })
 
 // Sass 
-
-gulp.task('sass',async()=>{
-    gulp.src('src/scss/*.scss')
+function style(){
+ return gulp.src('src/scss/*.scss')
         .pipe(sass())
         .pipe(gulp.dest('dist/css'))
-})
+        .pipe(browserSync.stream());
 
+}
+
+
+function watch (){
+    browserSync.init({
+        server:{
+            baseDir:'./'
+        }
+    })
+
+    gulp.watch('src/scss/*.scss',style);
+    gulp.watch('src/components/*.html').on('change',browserSync.reload);
+}
+exports.style=style;
+exports.watch=watch;  
