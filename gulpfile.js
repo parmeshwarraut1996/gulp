@@ -4,6 +4,7 @@ const uglify = require('gulp-uglify-es').default;
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 const browserSync = require('browser-sync').create();
+
 const sourcePath={
     htmlPath:'./*.html',
     imagePath:'src/images/*',
@@ -31,7 +32,7 @@ function copyHtml() {
 // image optimization 
 function imageMinify() {
     return gulp.src(sourcePath.imagePath)
-        .pipe(imageMin())
+        .pipe(imageMin().on('error',console.error))
         .pipe(gulp.dest(destPath.assets))
 }
 
@@ -53,7 +54,7 @@ function concatJS() {
 // Sass 
 function style() {
     return gulp.src(sourcePath.scssPath)
-        .pipe(sass())
+        .pipe(sass().on('error',console.error))
         .pipe(gulp.dest(destPath.css))
         .pipe(browserSync.stream());
 
